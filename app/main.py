@@ -11,5 +11,9 @@ from moudles import user
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
+app.add_middleware(
+    CORSMi
+)
+
 # 包含路由
 app.include_router(user.router)
