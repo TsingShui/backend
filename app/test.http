@@ -1,14 +1,33 @@
 POST http://127.0.0.1:8000/user/sign_in
 
 {
-    "user_name" : "1123",
+    "user_name" : "ADMIN",
     "passwd": "admin"
 
 }
 
 
-# eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzIiwiaWF0IjoxNjU0NDY1MDA4LCJuYmYiOjE2NTQ0NjUwMDgsImp0aSI6IjliZmFkZWM4LTE2MTctNGMwMS1iYWIxLTNiZjBiNzUyZDAxYiIsImV4cCI6MTY1NDQ2NTkwOCwidHlwZSI6ImFjY2VzcyIsImZyZXNoIjpmYWxzZX0.lAxE5OcBzX_bdNQG9jHgvZOFh7Az0Z_Wkv06YjB9lm0
+###
+POST http://127.0.0.1:8000/user/sign_up
+
+{
+    "user_name" :"admin1",
+    "passwd" :"admin"
+}
+
 
 ###
-GET http://127.0.0.1:8000/user/users
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzIiwiaWF0IjoxNjU0NDY1MDA4LCJuYmYiOjE2NTQ0NjUwMDgsImp0aSI6IjliZmFkZWM4LTE2MTctNGMwMS1iYWIxLTNiZjBiNzUyZDAxYiIsImV4cCI6MTY1NDQ2NTkwOCwidHlwZSI6ImFjY2VzcyIsImZyZXNoIjpmYWxzZX0.lAxE5OcBzX_bdNQG9jHgvZOFh7Az0Z_Wkv06YjB9lm0
+POST http://127.0.0.1:8000/user/post
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlhdCI6MTY1NDUxNzE1MSwibmJmIjoxNjU0NTE3MTUxLCJqdGkiOiIzZGIzMzYxNS1kZGFjLTQ3M2YtYjVmZC00NWRiY2ZlZGM3ZWIiLCJleHAiOjE2NTQ1MTgwNTEsInR5cGUiOiJhY2Nlc3MiLCJmcmVzaCI6ZmFsc2V9.ztwjMPViNpe1JQvojl6BX_ctue-8HlVBUXZYffP_sk0
+
+
+
+{
+    "title":"Test!",
+    "text" : "HelloWorld",
+    "tag" : ["A","B","C"]
+}
+
+
+###
+GET   http://127.0.0.1:8000/playground/papers

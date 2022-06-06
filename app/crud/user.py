@@ -14,14 +14,12 @@ def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(
         user_name=user.user_name,
         passwd=user.passwd,
-        gender=user.gender,
-        profile=user.profile,
-        links=user.links,
+        gender=user.gender ,
+        profile=user.profile ,
+        links=user.links ,
     )
 
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
-
-

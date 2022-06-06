@@ -4,8 +4,10 @@
 
 """
 
+from calendar import c
 from pydantic import BaseModel
-from typing import  List
+from typing import List
+
 
 class UserBase(BaseModel):
     user_name: str
@@ -18,6 +20,7 @@ class UserCreate(UserBase):
     passwd: str
     gender: str = None
     profile: List[str] = None
+    links: str = None
 
     class Config:
         orm_mode = True
@@ -42,3 +45,20 @@ class User(UserBase):
 
     class Config:
         orm_mod = True
+
+
+class PaperCreate(BaseModel):
+    #   基础内容
+    title: str
+    text: str
+    tag: List[str]
+
+    class Config:
+        orm_model = True
+
+
+class Paper(PaperCreate):
+    author_id: int
+
+    class Config:
+        orm_model = True

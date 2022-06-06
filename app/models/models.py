@@ -23,7 +23,7 @@ class User(Base):
     join_time = Column(Integer)
     profile = Column(String)
     links = Column(String)  # 用户 Github Links
-
+    avatar = Column(String)
     # 用户连接文章
     papers = relationship("Paper", back_populates="author")
 
@@ -35,8 +35,19 @@ class Paper(Base):
     # 内容
     title = Column(String(50))
     text = Column(String)
-    pub_time = Column(Integer)
-    tag = Column(String)
+    pub_time = Column(String)
     # author
     author_id = Column(Integer, ForeignKey('users.id'))
     author = relationship('User', back_populates='papers')
+    # 标签
+    tags = relationship('PaperTag',back_populates = 'tag_owner')
+
+
+class PaperTag(Base):
+    __tablename__ = 'paper_tags'
+    id = Column(Integer,primary_key = True,index=True)
+    tag = Column(String)
+
+    # owner
+    paper_id = Column(Integer,ForeignKey('papers.id'))
+    tag_owner = relationship('Paper',back_populates='tags')

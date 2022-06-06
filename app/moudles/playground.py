@@ -18,19 +18,57 @@ from fastapi.exceptions import HTTPException
 import crud
 # 导入 JsonResponse
 from fastapi.responses import JSONResponse
-
+from typing import List
 
 router = APIRouter(
     prefix='/playground',
-    tags = ['playground']
+    tags=['playground']
 )
 
 
 # 获取所有文章
 
-# @router.get('/papers')
-# async def get_papers(db:Session=Depends(get_db)):
-#     """
-#     返回排序过的所有文章
-#     """
+class PlayGroundAuthor(BaseModel):
+    id: int | None
+    name: str | None
+    avatar: str | None
 
+    class Config:
+        orm_model = True
+
+
+class PlayGroundPaper(BaseModel):
+    id: int | None
+    author: PlayGroundAuthor | None
+    title: str | None
+    content: str | None
+    date: str | None
+    tags: List[str] | None
+
+    class Config:
+        orm_model = True
+
+
+@router.get('/papers')
+def get_papers(db: Session = Depends(get_db)):
+    import random
+    """
+    返回随机排序的文章
+    """
+    paper_list: List[models.Paper] = db.query(models.Paper).all()
+    new_paper_list = []
+    for paper in paper_list:
+        play_ground_paper = PlayGroundPaper()
+        play_ground_paper.author = PlayGroundAuthor()
+        play_ground_paper.id = paper.id
+        play_ground_paper.date = paper.pub_time
+        play_ground_paper.title = paper.title
+        play_ground_paper.content = paper.text
+        play_ground_paper.tags = [i.tag for i in paper.tags]
+        play_ground_paper.author.id = paper.author.id
+        play_ground_paper.author.name = paper.author.user_name
+        play_ground_paper.author.avatar = 'https://s3.bmp.ovh/imgs/2022/03/5524b1bf3e53ec04.jpg'
+        new_paper_list.append(play_ground_paper)
+    random.shuffle(new_paper_list)
+    return new_paper_list
+# https://s3.bmp.ovh/imgs/2022/03/5524b1bf3e53ec04.jpg

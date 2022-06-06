@@ -1,4 +1,5 @@
 # 导入路由
+import datetime
 from fastapi import APIRouter
 # 导入Depends
 from fastapi import Depends
@@ -30,9 +31,6 @@ def get_config():
     return Settings()
 
 
-# JWT
-
-
 # 路由实例
 router = APIRouter(
     prefix='/user',
@@ -50,14 +48,15 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         return JSONResponse(status_code=401, content={
             'error_msg': 'user_name has existed'
         })
-    
+
     return crud.create_user(db=db, user=user)
 
 
 @router.post('/sign_in')
 def login_user(user: schemas.UserLogin, db: Session = Depends(get_db), Auth: AuthJWT = Depends()):
 
-    user_in_db = db.query(models.User).filter(models.User.user_name == user.user_name).first()
+    user_in_db = db.query(models.User).filter(
+        models.User.user_name == user.user_name).first()
     if user_in_db.passwd != user.passwd:
         return JSONResponse(
             status_code=401,
@@ -70,12 +69,36 @@ def login_user(user: schemas.UserLogin, db: Session = Depends(get_db), Auth: Aut
     return JSONResponse(
         status_code=200,
         content={
-            'token':token
+            'token': token
         }
     )
 
-@router.post('/post')
-def post(db:Session = Depends(get_db),Auth: AuthJWT= Depends()):
+
+@router.post('/post_paper')
+def post(paper: schemas.PaperCreate, db: Session = Depends(get_db), Auth: AuthJWT = Depends()):
     Auth.jwt_required()
-    db.query()
-    pass
+    author_id = Auth.get_jwt_subject()
+    pub_time = "".join(
+        [i for i in str(datetime.datetime.now()) if i.isdigit()])
+    paper_to_create = models.Paper(
+        title=paper.title,
+        text=paper.text,
+        pub_time=pub_time,
+        author_id=author_id
+    )
+
+    db.add(paper_to_create)
+    db.commit()
+    db.refresh(paper_to_create)
+
+    for i in paper.tag:
+        tag_to_create = models.PaperTag(
+            tag=i,
+            paper_id=paper_to_create.id,
+        )
+        db.add(tag_to_create)
+        db.commit()
+        db.refresh(tag_to_create)
+    return paper_to_create
+
+

@@ -6,7 +6,7 @@ from db.database import engine
 
 # 导入模块路由
 from moudles import user
-
+from moudles import playground
 # 跨域
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -26,3 +26,4 @@ app.add_middleware(
 
 # 包含路由
 app.include_router(user.router)
+app.include_router(playground.router)

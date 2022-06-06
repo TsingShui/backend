@@ -3,3 +3,4 @@ from .schemas import User
 from .schemas import UserCreate
 from .schemas import UserBase
 from .schemas import UserLogin
+from .schemas import *
