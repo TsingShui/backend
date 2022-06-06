@@ -1,7 +1,14 @@
-POST http://127.0.0.1:8000/user
+POST http://127.0.0.1:8000/user/sign_in
 
 {
-    "email" : "tsingshuii@outlook.com",
+    "user_name" : "1123",
     "passwd": "admin"
 
 }
+
+
+# eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzIiwiaWF0IjoxNjU0NDY1MDA4LCJuYmYiOjE2NTQ0NjUwMDgsImp0aSI6IjliZmFkZWM4LTE2MTctNGMwMS1iYWIxLTNiZjBiNzUyZDAxYiIsImV4cCI6MTY1NDQ2NTkwOCwidHlwZSI6ImFjY2VzcyIsImZyZXNoIjpmYWxzZX0.lAxE5OcBzX_bdNQG9jHgvZOFh7Az0Z_Wkv06YjB9lm0
+
+###
+GET http://127.0.0.1:8000/user/users
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIzIiwiaWF0IjoxNjU0NDY1MDA4LCJuYmYiOjE2NTQ0NjUwMDgsImp0aSI6IjliZmFkZWM4LTE2MTctNGMwMS1iYWIxLTNiZjBiNzUyZDAxYiIsImV4cCI6MTY1NDQ2NTkwOCwidHlwZSI6ImFjY2VzcyIsImZyZXNoIjpmYWxzZX0.lAxE5OcBzX_bdNQG9jHgvZOFh7Az0Z_Wkv06YjB9lm0

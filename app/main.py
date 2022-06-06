@@ -7,12 +7,21 @@ from db.database import engine
 # 导入模块路由
 from moudles import user
 
+# 跨域
+from fastapi.middleware.cors import CORSMiddleware
+
 # 主程序
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
+# 跨域设置
 app.add_middleware(
-    CORSMi
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_credentials=False,
+    allow_headers=["*"],
+
 )
 
 # 包含路由

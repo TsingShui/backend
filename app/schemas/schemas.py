@@ -4,20 +4,41 @@
 
 """
 
-
-
 from pydantic import BaseModel
+from typing import  List
+
 class UserBase(BaseModel):
-    email :str
+    user_name: str
+
     class Config:
         orm_mode = True
+
 
 class UserCreate(UserBase):
-    passwd : str
+    passwd: str
+    gender: str = None
+    profile: List[str] = None
+
     class Config:
         orm_mode = True
 
+
+class UserLogin(UserBase):
+    passwd: str
+
+    class Config:
+        orm_mode = True
+
+
+class UserToken(UserBase):
+    token: str
+
+    class Config:
+        orm_mode = True
+
+
 class User(UserBase):
-    id :int
+    id: int
+
     class Config:
         orm_mod = True
